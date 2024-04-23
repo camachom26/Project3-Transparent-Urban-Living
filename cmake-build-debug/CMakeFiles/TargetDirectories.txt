@@ -1,0 +1,3 @@
+/Users/miacamacho/CLionProjects/Project3-Transparent-Urban-Living/cmake-build-debug/CMakeFiles/Project3_Transparent_Urban_Living.dir
+/Users/miacamacho/CLionProjects/Project3-Transparent-Urban-Living/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/miacamacho/CLionProjects/Project3-Transparent-Urban-Living/cmake-build-debug/CMakeFiles/rebuild_cache.dir
