@@ -1,0 +1,23 @@
+Hello!!
+A guide to our code:
+We are using a heap and an unordered map for our two primary data structures
+HEAP:
+    In main, enter the poverty rate you want to use as the baseline or leave our standard 7% as is
+        You would switch it in the if else statements (wherever you see a greater than or less than value)
+    To start, change the file path to wherever you saved the Excel sheet with the data
+    Then in find where the code reads
+        find_town_info(locations, "1001020600.00");
+        cout <<endl;
+        heap.extractMax();
+    Change the town number if you desire to look for a different region, alternative numbers are in the Excel sheet
+    You can also remove extract max if you would like, we mostly use it to verify it has parsed all the files
+    From here move to the Python Program "data_visuals"
+    Change the file paths to match what they are saved on to your computer and then you can visualize the poverty rates
+    and their relationship with food deserts
+
+MAP:
+    The census tracts are sorted by county but you can also sort them by state, food access, or any other data point
+    very easily by changing what gets sent in as a key to the map. However, note that the map in the class is named
+    "counties".
+    Change the file paths to match what they are saved on to your computer and then you can visualize the poverty
+    rates and their relationship with food deserts
