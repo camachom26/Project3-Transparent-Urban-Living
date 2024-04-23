@@ -4,8 +4,8 @@
 #include<vector>
 #include<sstream>
 #include<fstream>
-#include <utility>
-#include <functional>
+#include<utility>
+#include<functional>
 
 
 using namespace std;
@@ -40,7 +40,7 @@ public:
         }
     }
 
-    vector<location_stats> getAdjList(string& key) {
+    vector<location_stats> getlist(string& key) {
         return counties[key];
     }
     void search(ofstream& low_poverty_low_access_file, ofstream& high_poverty_low_access_file,
@@ -49,10 +49,10 @@ public:
             for (const auto& location : county.second) {
                 // Convert population and poverty_rate to numerical values
                 int lowAccess = stoi(location.low_access);
-                float poverty_rate = stof(location.poverty_rate);
+                double poverty_rate = stod(location.poverty_rate);
 
                 // Check conditions and categorize locations
-                if (poverty_rate < 7 && lowAccess == 1) {
+                if (poverty_rate < 10 && lowAccess == 1) {
                     // Low Poverty, Low Access
                     low_poverty_low_access_file << location.town_number << ","
                                                 << location.county << ","
@@ -61,7 +61,7 @@ public:
                                                 << location.poverty_rate << ","
                                                 << location.income << ","
                                                 << location.low_access << "\n";
-                } else if (poverty_rate >= 7 && lowAccess == 1) {
+                } else if (poverty_rate >= 10 && lowAccess == 1) {
                     // High Poverty, Low Access
                     high_poverty_low_access_file << location.town_number << ","
                                                  << location.county << ","
@@ -70,7 +70,7 @@ public:
                                                  << location.poverty_rate << ","
                                                  << location.income << ","
                                                  << location.low_access << "\n";
-                } else if (poverty_rate < 7 && lowAccess == 0) {
+                } else if (poverty_rate < 10 && lowAccess == 0) {
                     // Low Poverty, No Low Access
                     low_poverty_no_low_access_file << location.town_number << ","
                                                    << location.county << ","
@@ -79,7 +79,7 @@ public:
                                                    << location.poverty_rate << ","
                                                    << location.income << ","
                                                    << location.low_access << "\n";
-                } else if (poverty_rate >= 7 && lowAccess == 0) {
+                } else if (poverty_rate >= 10 && lowAccess == 0) {
                     // High Poverty, No Low Access
                     high_poverty_no_low_access_file << location.town_number << ","
                                                     << location.county << ","
@@ -100,7 +100,8 @@ public:
 
 int main() {
 
-    string filename = "";  // Update file path as needed
+
+    string filename = "/Users/miacamacho/CLionProjects/Project3-Transparent-Urban-Living/src/graph implementation/output.csv";  // Update file path as needed
     ifstream file(filename);
 
     CensusData g;  // this object stores a map that links county names to a list of census tracts
@@ -136,9 +137,10 @@ int main() {
             g.insert(county, loc);
         } catch (const exception& e) {
             // Log error details and continue processing
-            cerr << "Error on line " << town_number << ": " << e.what() << endl;
+            //cerr << "Error on line " << town_number << ": " << e.what() << endl;
         }
     }
+
 
 
     file.close();
@@ -148,10 +150,24 @@ int main() {
     ofstream low_poverty_no_low_access_file("low_poverty_no_low_access.csv");
     ofstream high_poverty_no_low_access_file("high_poverty_no_low_access.csv");
 
+    ofstream county_file("county_data.csv");
+    string county = "Waushara County";
+    vector<location_stats> augusta = g.getlist(county);
+    for(const auto& l : augusta) {
+        county_file << l.town_number << ","
+                    << l.county << ","
+                    << l.state << ","
+                    << l.population << ","
+                    << l.poverty_rate << ","
+                    << l.income << ","
+                    << l.low_access << "\n";
+    }
+
     // Perform search and categorize locations, writing to respective files
     g.search(low_poverty_low_access_file, high_poverty_low_access_file, low_poverty_no_low_access_file, high_poverty_no_low_access_file);
 
     // Close the CSV files
+    county_file.close();
     low_poverty_low_access_file.close();
     high_poverty_low_access_file.close();
     low_poverty_no_low_access_file.close();
