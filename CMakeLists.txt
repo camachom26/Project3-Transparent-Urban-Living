@@ -3,9 +3,7 @@ project(Project3_Transparent_Urban_Living)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(src/main)
+include_directories("src/graph implementation")
 
 add_executable(Project3_Transparent_Urban_Living
-        src/main/graph_implementation.cpp
-        src/main/graph_implementation.h
-        src/main/main.cpp src/main/city.cpp src/main/city.h)
+        "src/graph implementation/main.cpp")
